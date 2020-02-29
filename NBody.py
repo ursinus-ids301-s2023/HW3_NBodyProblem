@@ -50,9 +50,9 @@ def load_universe(filename):
 ## First, load in the universe an set up all of the spheres
 ## in vpython
 P, V, masses, colors, sizes = load_universe("4Planets.csv")
-n_planets = P.shape[0]
+N = P.shape[0] # Store away how many bodies there are
 spheres = []
-for i in range(n_planets):
+for i in range(N):
     c = colors[i, :]
     ball = sphere(pos=vector(P[i, 0], P[i, 1], P[i, 2]), radius=sizes[i], color=vector(c[0], c[1], c[2]), make_trail=True)
     spheres.append(ball)
@@ -78,7 +78,7 @@ while total_time < SECONDS_IN_DAY*687:
 
     ## Step 2: Apply physics
     ## Step 2a: Compute the acceleration for each planet
-    A = np.zeros((n_planets, 3))
+    A = np.zeros((N, 3))
     ## TODO: Fill in each row of the A matrix with the 
     ## acceleration for each body
 
@@ -88,5 +88,5 @@ while total_time < SECONDS_IN_DAY*687:
     ## of each body
     
     ## Step 3: Update graphics
-    for i in range(n_planets):
+    for i in range(N):
         spheres[i].pos = vector(P[i, 0], P[i, 1], P[i, 2])
