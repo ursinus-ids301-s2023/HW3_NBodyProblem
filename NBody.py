@@ -90,3 +90,4 @@ while total_time < SECONDS_IN_DAY*687:
     ## Step 3: Update graphics
     for i in range(N):
         spheres[i].pos = vector(P[i, 0], P[i, 1], P[i, 2])
+    time.sleep(0.01)
