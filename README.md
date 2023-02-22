@@ -1,5 +1,5 @@
 # HW4_NBodyProblem
 
-Please <a href = "http://www.ctralie.com/Teaching/IDS301_S2020/Assignments/HW4_NBodyProblem/">Click here</a> to see more information
+Please <a href = "https://ursinus-ids301-s2023.github.io/CoursePage/Assignments/HW3_NBodyProblem/index.html">Click here</a> to see more information
 
 <img src = "NBody_Solution.gif">
