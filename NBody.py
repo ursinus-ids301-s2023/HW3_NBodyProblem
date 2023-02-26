@@ -1,5 +1,4 @@
 from vpython import *
-import numpy as np
 import time
 
 G = 6.67408e-11 # Gravitational constant: meters^3/(kg*sec^2)
@@ -34,6 +33,7 @@ def load_universe(filename):
         The radius of the sphere to draw (not necessarily to scale,
         but so that everything shows up while rendering)
     """
+    import numpy as np
     X = np.loadtxt(filename, delimiter=',')
     # First three columns are xyz coordinates of initial position
     P = X[:, 0:3]
@@ -47,15 +47,18 @@ def load_universe(filename):
     sizes = X[:, -1]
     return P, V, masses, colors, sizes
 
-## First, load in the universe an set up all of the spheres
-## in vpython
+## First, load in the universe an set up all of the planet spheres in vpython
 P, V, masses, colors, sizes = load_universe("4Planets.csv")
-N = P.shape[0] # Store away how many bodies there are
-spheres = []
-for i in range(N):
+n_planets = P.shape[0] # Store away how many bodies there are
+planets = []
+velocities = []
+accelerations = []
+for i in range(n_planets):
     c = colors[i, :]
-    ball = sphere(pos=vector(P[i, 0], P[i, 1], P[i, 2]), radius=sizes[i], color=vector(c[0], c[1], c[2]), make_trail=True)
-    spheres.append(ball)
+    planet = sphere(pos=vector(P[i, 0], P[i, 1], P[i, 2]), radius=sizes[i], color=vector(c[0], c[1], c[2]), make_trail=True)
+    planets.append(planet)
+    velocities.append(vector(V[i, 0], V[i, 1], V[i, 2]))
+    accelerations.append(vector(0, 0, 0))
 
 SECONDS_IN_DAY = 3600*24
 # Every second in the simulation is about a month
@@ -77,17 +80,13 @@ while total_time < SECONDS_IN_DAY*687:
     T.text = "\nElapsed Time: %.3g Days"%(total_time/SECONDS_IN_DAY)
 
     ## Step 2: Apply physics
-    ## Step 2a: Compute the acceleration for each planet
-    A = np.zeros((N, 3))
-    ## TODO: Fill in each row of the A matrix with the 
-    ## acceleration for each body
+    ## Step 2a: Reset the acceleration vector for each planet to (0, 0, 0)
+    for i in range(n_planets):
+        accelerations[i] = vector(0, 0, 0)
+    ## TODO: Update each acceleration vector with the acceleration of each body
 
     ## Step 2b: Apply the laws of physics to each body
-    ## TODO: Update each row of V and each row of P
-    ## to store the new velocity and position, respectively,
-    ## of each body
-    
-    ## Step 3: Update graphics
-    for i in range(N):
-        spheres[i].pos = vector(P[i, 0], P[i, 1], P[i, 2])
+    ## TODO: Update each planet's velocity based on the acceleration,
+    ## then update ach planet's position based on the velocity
+
     time.sleep(0.01)
